@@ -24,7 +24,7 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn('To-Do',header_text)
 
         # Ela é convidade a inserir um item de tarefa imediatamente
-        inputbox = self.browser.find.element_by_id('id_new_item')
+        inputbox = self.browser.find_element_by_id('id_new_item')
         self.assertEqual(
             inputbox.get_attribute('placeholder'),
             'Enter a to-do item')
@@ -35,13 +35,14 @@ class NewVisitorTest(unittest.TestCase):
 
         # quando ela teclar enter, a pagina é atualizada, e agora a pagina lista
         # "1: Buy peacock feathers" como intem em uma lista de tarefas
-        inputbox.send_keys(keys.Enter)
+        inputbox.send_keys(Keys.ENTER)
         time.sleep(1)
 
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(
-            any(row.text == '1: Buy peacock feathers' for row in rows)
+            any(row.text == '1: Buy peacock feathers' for row in rows),
+            "New to-do item not appear in table"
             )
         
         # Ainda continua havendo uma caixa de texto convidando-a a acrescentar outro
